@@ -7,6 +7,11 @@ export type Word = {
 
 type Dictionary = Array<Word>;
 
+export type WordRandom = {
+  gender: string;
+  word: Word;
+};
+
 const der: Dictionary = [
   {
     singular: "Elefant",
@@ -20,13 +25,25 @@ const der: Dictionary = [
     translation: "Horse",
     level: "A1",
   },
+  {
+    singular: "Arbeiter",
+    plural: "Arbeiter",
+    translation: "Worker",
+    level: "A1",
+  },
 ];
 
 const das: Dictionary = [
   {
     singular: "Brot",
-    plural: "Brot",
+    plural: "Brote",
     translation: "Bread",
+    level: "A1",
+  },
+  {
+    singular: "Gemüse",
+    plural: "Gemüse",
+    translation: "Vegetables",
     level: "A1",
   },
 ];
@@ -38,6 +55,12 @@ const die: Dictionary = [
     translation: "Cat",
     level: "A1",
   },
+  {
+    singular: "Bewegung",
+    plural: "Bewegungen",
+    translation: "Movement",
+    level: "A1",
+  },
 ];
 
 const gendersArray = [
@@ -46,7 +69,7 @@ const gendersArray = [
   { gender: "die", words: die },
 ];
 
-export function getTheWord(): { gender: string; word: Word } {
+export function getTheWord(): WordRandom {
   const randomGenderIndex = Math.floor(Math.random() * gendersArray.length);
   const selectedGender = gendersArray[randomGenderIndex];
 

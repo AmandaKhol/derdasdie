@@ -1,10 +1,9 @@
 import RandomWordClient from "./components/RandomWordClient";
 
-
 export default function Page() {
   return (
-    <main className="flex min-h-screen items-center justify-center">
+    <div className="flex-1 flex flex-col items-center justify-center w-full h-full">
       <RandomWordClient />
-    </main>
-  )
+    </div>
+  );
 }
