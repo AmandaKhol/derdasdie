@@ -4,23 +4,25 @@ import { useEffect, useState } from "react";
 import { getTheWord, WordRandom } from "../../../dictionaries/words";
 import InformationPanel from "./InformationPanel";
 import SelectAnswer from "./SelectAnswer";
+import NewWord from "./NewWord";
 
-export default function RandomWordClient() {
+const RandomWordClient = () => {
   const [word, setWord] = useState<WordRandom | null>(null);
-
   const [showCorrectMessage, setShowCorrectMessage] = useState<boolean | null>(
     null
   );
+  const [answerSelected, setAnswerSelected] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchWord = async () => {
-      setWord(getTheWord());
+      setWord(getTheWord(word));
     };
 
     fetchWord();
   }, []);
 
   const handleChange = (value: string) => {
+    setAnswerSelected(value);
     if (value === word?.gender) {
       setShowCorrectMessage(true);
     } else {
@@ -29,8 +31,9 @@ export default function RandomWordClient() {
   };
 
   const renewWord = () => {
-    setWord(getTheWord());
+    setWord(getTheWord(word));
     setShowCorrectMessage(null);
+    setAnswerSelected(null);
   };
 
   if (!word) return <p>Loading word...</p>;
@@ -41,7 +44,10 @@ export default function RandomWordClient() {
         <div className="m-4 bg-gray-300 p-10 w-44 text-center text-3xl rounded-2xl min-w-2xl">
           <p>{word.word.singular}</p>
         </div>
-        <SelectAnswer handleSelect={handleChange}></SelectAnswer>
+        <SelectAnswer
+          handleSelect={handleChange}
+          answerSelected={answerSelected}
+        ></SelectAnswer>
 
         {showCorrectMessage !== null && (
           <div className="text-xl">
@@ -56,15 +62,9 @@ export default function RandomWordClient() {
           </div>
         )}
       </div>
-
-      <div className="mb-6">
-        <button
-          className="text-black text-xl bg-green-500 hover:bg-green-800 shadow-xs font-medium leading-5 rounded-base px-4 py-2.5"
-          onClick={renewWord}
-        >
-          New Word
-        </button>
-      </div>
+      <NewWord renewWord={renewWord} />
     </div>
   );
-}
+};
+
+export default RandomWordClient;
